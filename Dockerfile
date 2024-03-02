@@ -21,13 +21,13 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Remove the default index.html
 # RUN rm /var/www/html/index.html
 
 # Copy existing application directory contents
-COPY . /var/www
+COPY . /var/www/html
 
 # Copy the Apache configuration file into the container to serve the Laravel app
 # COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
