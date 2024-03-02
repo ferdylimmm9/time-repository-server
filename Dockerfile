@@ -24,7 +24,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 # Remove the default index.html
-RUN rm /var/www/html/index.html
+# RUN rm /var/www/html/index.html
 
 # Copy existing application directory contents
 COPY . /var/www
