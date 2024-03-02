@@ -32,12 +32,17 @@ COPY . /var/www/html
 
 # Increase Composer memory limit and add verbose output for troubleshooting
 # Clear Composer's cache before install
+# Ignoring platform reqs might not be the best approach for all scenarios,
+# as it might lead to installing packages that cannot be executed due to missing PHP extensions.
+# The --ignore-platform-req=ext-gd has been removed to prevent ignoring important requirements.
+# Consider explicitly installing or enabling all required PHP extensions.
 RUN composer clear-cache
-RUN composer install --no-interaction --no-ansi --no-scripts --no-progress --prefer-dist --ignore-platform-req=ext-gd
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --no-ansi --no-scripts --no-progress --prefer-dist
 
 # Copy .env.example to .env and generate app key
-# The artisan command might fail if .env file is not properly configured for your environment
-# Consider generating the key manually or ensuring your .env configuration is correct
+# The artisan command is commented out to avoid failures during Docker build
+# due to potential absence of environment-specific configurations in .env.
+# Consider running the key generation command outside the Dockerfile or after ensuring .env is correctly set up.
 # RUN cp .env.example .env && php artisan key:generate
 
 # Change ownership of our applications
