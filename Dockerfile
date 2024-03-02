@@ -30,7 +30,7 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install
 
 # Copy .env.example to .env and generate app key
 RUN cp .env.example .env && php artisan key:generate
