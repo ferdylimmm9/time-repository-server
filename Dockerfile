@@ -32,13 +32,13 @@ COPY . /var/www/html
 
 # Increase Composer memory limit and add verbose output for troubleshooting
 # Clear Composer's cache before install
-RUN COMPOSER_MEMORY_LIMIT=-1 composer clear-cache
-RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --no-ansi --no-scripts --no-progress --prefer-dist --ignore-platform-req=ext-gd
+RUN composer clear-cache
+RUN composer install --no-interaction --no-ansi --no-scripts --no-progress --prefer-dist --ignore-platform-req=ext-gd
 
 # Copy .env.example to .env and generate app key
 # The artisan command might fail if .env file is not properly configured for your environment
 # Consider generating the key manually or ensuring your .env configuration is correct
-RUN cp .env.example .env && php artisan key:generate
+# RUN cp .env.example .env && php artisan key:generate
 
 # Change ownership of our applications
 RUN chown -R www-data:www-data /var/www/html
