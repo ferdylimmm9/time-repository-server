@@ -30,7 +30,7 @@ RUN rm /var/www/html/index.html
 COPY . /var/www
 
 # Copy the Apache configuration file into the container to serve the Laravel app
-COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+# COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Enable Apache mod_rewrite for URL rewriting
 RUN a2enmod rewrite
