@@ -20,14 +20,16 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Copy existing application directory contents
+COPY . /var/www/html
+
 # Set working directory
 WORKDIR /var/www/html
 
 # Remove the default index.html
 # RUN rm /var/www/html/index.html
 
-# Copy existing application directory contents
-COPY . /var/www/html
+
 
 RUN chown -R www-data:www-data /var/www/html
 
