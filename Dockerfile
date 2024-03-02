@@ -39,9 +39,9 @@ RUN a2enmod rewrite
 EXPOSE 80
 
 # Set permissions for the Laravel app
-RUN chown -R www-data:www-data /var/www && \
-    chmod -R 755 /var/www/storage && \
-    chmod -R 755 /var/www/bootstrap/cache
+# RUN chown -R www-data:www-data /var/www && \
+#     chmod -R 755 /var/www/storage && \
+#     chmod -R 755 /var/www/bootstrap/cache
 
 # Start Apache service
 CMD ["apache2-foreground"]
