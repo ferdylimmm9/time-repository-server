@@ -33,7 +33,7 @@ COPY . /var/www
 # COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Enable Apache mod_rewrite for URL rewriting
-RUN a2enmod rewrite
+# RUN a2enmod rewrite
 
 # Expose port 80
 EXPOSE 9000
