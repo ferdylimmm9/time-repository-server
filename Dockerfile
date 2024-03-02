@@ -9,13 +9,14 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    libpq-dev # Added for PostgreSQL support
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -29,10 +30,14 @@ WORKDIR /var/www/html
 # Copy existing application directory contents
 COPY . /var/www/html
 
-# Install PHP dependencies
-RUN composer install
+# Increase Composer memory limit and add verbose output for troubleshooting
+# Clear Composer's cache before install
+RUN COMPOSER_MEMORY_LIMIT=-1 composer clear-cache
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --optimize-autoloader -vvv
 
 # Copy .env.example to .env and generate app key
+# The artisan command might fail if .env file is not properly configured for your environment
+# Consider generating the key manually or ensuring your .env configuration is correct
 RUN cp .env.example .env && php artisan key:generate
 
 # Change ownership of our applications
