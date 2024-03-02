@@ -29,6 +29,8 @@ WORKDIR /var/www/html
 # Copy existing application directory contents
 COPY . /var/www/html
 
+RUN chown -R www-data:www-data /var/www/html
+
 # Copy the Apache configuration file into the container to serve the Laravel app
 # COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
@@ -36,5 +38,5 @@ COPY . /var/www/html
 # RUN a2enmod rewrite
 
 # Expose port 80
-EXPOSE 9000
-CMD ["php-fpm"]
+EXPOSE 80
+# CMD ["php-fpm"]
