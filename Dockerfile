@@ -19,7 +19,6 @@ WORKDIR /var/www
 
 # Install application dependencies
 RUN composer install --no-interaction --no-ansi --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
-# RUN composer update
 
 RUN php artisan migrate --force && \
     # php artisan db:seed && \
