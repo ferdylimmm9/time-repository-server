@@ -1,44 +1,36 @@
-# Use the official PHP image with Apache
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
-# Install system dependencies
+# Install required extensions and libraries
 RUN apt-get update && apt-get install -y \
-    git \
     curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip
+    git \
+    unzip \
+    libpq-dev \
+    libzip-dev \
+    && docker-php-ext-install pdo pdo_pgsql zip
 
-# Install PostgreSQL extension
-RUN apt-get install -y libpq-dev && docker-php-ext-install pdo_pgsql
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+# Copy application files to container
+COPY . /var/www
 
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+WORKDIR /var/www
 
-# Copy existing application directory contents
-COPY . /var/www/html
+# Install application dependencies
+RUN composer install --no-interaction --no-ansi --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+RUN composer update
 
-# Set working directory
-WORKDIR /var/www/html
+RUN php artisan migrate --force && \
+    # php artisan db:seed && \
+    php artisan optimize:clear
 
-# Remove the default index.html
-# RUN rm /var/www/html/index.html
+EXPOSE 8080
 
+# COPY docker-entrypoint.sh /usr/local/bin/
+# RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
+# ENTRYPOINT ["docker-entrypoint.sh"]
 
-RUN chown -R www-data:www-data /var/www/html
-
-# Copy the Apache configuration file into the container to serve the Laravel app
-# COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
-
-# Enable Apache mod_rewrite for URL rewriting
-# RUN a2enmod rewrite
-
-# Expose port 80
-EXPOSE 80
-# CMD ["php-fpm"]
+CMD ["php-fpm"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
