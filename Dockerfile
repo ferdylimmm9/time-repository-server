@@ -51,7 +51,6 @@ COPY docker/php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 ADD . /var/www/html
 RUN chown -R sail:www-data storage
-RUN chown -R sail:www-data bootstrap/cache
 RUN chmod -R 775 storage
 RUN chmod -R 775 bootstrap/cache
 RUN cp .env.example .env
