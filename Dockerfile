@@ -53,6 +53,8 @@ RUN chown -R sail:sail /var/www/html
 ADD . /var/www/html
 RUN chown -R sail:www-data storage
 RUN chmod -R 775 storage
+RUN chown -R sail:www-data storage bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
 RUN cp .env.example .env
 
 ENTRYPOINT ["start-container"]
