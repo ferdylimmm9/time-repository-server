@@ -13,10 +13,6 @@ composer install
 php artisan migrate
 chmod -R ugo+rw /.composer
 
-chmod +x vendor
-chown -R sail:www-data vendor
-chmod -R 775 vendor
-
 if [ ! -z "$PORT" ]; then
     sed -i -e "s/--port=80/--port=$PORT/g" /etc/supervisor/conf.d/supervisord.conf
 fi
