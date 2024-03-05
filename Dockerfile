@@ -69,6 +69,8 @@ ADD . /var/www/html
 #     && chmod -R 775 storage \
 #     && chmod -R 775 bootstrap/cache
 
+RUN chown -R sail:www-data storage
+
 # Setup application
 RUN cp .env.example .env
 
