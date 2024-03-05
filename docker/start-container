@@ -12,6 +12,7 @@ npm install
 composer install
 php artisan migrate
 chmod -R ugo+rw /.composer
+chmod -R 777 /var/www/html/storage/*
 
 if [ ! -z "$PORT" ]; then
     sed -i -e "s/--port=80/--port=$PORT/g" /etc/supervisor/conf.d/supervisord.conf
