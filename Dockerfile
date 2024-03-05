@@ -64,10 +64,10 @@ RUN chmod +x /usr/local/bin/start-container
 ADD . /var/www/html
 
 # Set ownership and permissions
-RUN chown -R sail:www-data storage \
-    && chown -R sail:www-data bootstrap/cache \
-    && chmod -R 775 storage \
-    && chmod -R 775 bootstrap/cache
+# RUN chown -R sail:www-data storage \
+#     && chown -R sail:www-data bootstrap/cache \
+#     && chmod -R 775 storage \
+#     && chmod -R 775 bootstrap/cache
 
 # Setup application
 RUN cp .env.example .env
