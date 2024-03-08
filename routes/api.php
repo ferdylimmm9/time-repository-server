@@ -28,6 +28,8 @@ Route::get('health', [GlobalController::class, 'health']);
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/refresh', [AuthController::class, 'refresh']);
+Route::apiResource('user/tugas-akhir', UserTesisController::class)->only('index', 'show', 'store');
+Route::apiResource('user/user', UserUserController::class)->only('index', 'show');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('enums/{enum}', EnumController::class);
@@ -48,7 +50,6 @@ Route::middleware('auth:api')->group(function () {
         Route::get('me', [AuthController::class, 'me']);
         Route::post('change-password', [AuthController::class, 'changePassword']);
         Route::post('tugas-akhir/{tesis}/update-file', [UserTesisController::class, 'updateFile']);
-        Route::apiResource('tugas-akhir', UserTesisController::class)->only('index', 'show', 'store');
-        Route::apiResource('user', UserUserController::class)->only('index', 'show');
+
     });
 }) ;
