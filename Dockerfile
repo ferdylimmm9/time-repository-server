@@ -60,6 +60,7 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
+
 # Copy application code
 ADD . /var/www/html
 
@@ -71,5 +72,11 @@ ADD . /var/www/html
 
 # Setup application
 RUN cp .env.example .env
+
+RUN chmod -R gu+w storage
+
+RUN chmod -R guo+w storage
+
+RUN php artisan cache:clear
 
 ENTRYPOINT ["start-container"]
