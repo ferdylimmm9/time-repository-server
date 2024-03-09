@@ -73,9 +73,5 @@ ADD . /var/www/html
 # Setup application
 RUN cp .env.example .env
 
-RUN chmod -R gu+w storage
-
-RUN chmod -R guo+w storage
-
 
 ENTRYPOINT ["start-container"]
