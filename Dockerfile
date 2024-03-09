@@ -77,6 +77,5 @@ RUN chmod -R gu+w storage
 
 RUN chmod -R guo+w storage
 
-RUN php artisan cache:clear
 
 ENTRYPOINT ["start-container"]
