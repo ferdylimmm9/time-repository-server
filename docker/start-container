@@ -11,6 +11,7 @@ fi
 npm install
 composer install
 php artisan migrate
+php artisan optimize:clear
 chmod -R ugo+rw /.composer
 chmod -R 777 /var/www/html/storage/*
 
